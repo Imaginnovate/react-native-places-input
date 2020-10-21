@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Image,
 } from 'react-native';
 
 class PlacesInput extends Component {
@@ -39,10 +40,15 @@ class PlacesInput extends Component {
 
   render() {
     return (
-      <View style={[styles.container, this.props.stylesContainer]}>
+      <View style={{flex:1}}>
+        <View style={ styles.contentBG }>
+            <TouchableOpacity style={ styles.leftView } onPress={ this.props.backSelection }>
+              <Image style={ styles.leftImage } source={ require('./arrow_back.png') } />
+            </TouchableOpacity>
+      <View style={[styles.textInputBG, this.props.stylesContainer]}>      
         <TextInput
           placeholder={this.props.placeHolder}
-          style={[styles.input, this.props.stylesInput]}
+          style={[styles.input, styles.textInput, this.props.stylesInput]}
           onChangeText={query => {
             this.setState({query}, () => {
               this.onPlaceSearch();
@@ -55,6 +61,8 @@ class PlacesInput extends Component {
           {...this.props.textInputProps}
           clearButtonMode="always"
         />
+        </View>
+        </View>
         {this.state.showList && (
           <View
             style={[styles.scrollView, this.props.stylesList]}
@@ -68,16 +76,25 @@ class PlacesInput extends Component {
               />
             )}
             {this.state.places.map(place => {
+              console.log(place);
               return (
                 <TouchableOpacity
                   key={`place-${place.place_id || place.id}`}
                   style={[styles.place, this.props.stylesItem]}
                   onPress={() => this.onPlaceSelect(place.place_id, place)}
                 >
+                  <View style={styles.itemBG}>
+                  <Image style={ styles.time } source={ require('./time.png') } />
+                  <View style={styles.itemContent}>
                   <Text style={[styles.placeText, this.props.stylesItemText]}>
+                    {place.terms[0].value}
+                  </Text>
+                  <Text style={[styles.placeText, styles.subTitle, this.props.stylesItemText]}>
                     {this.props.resultRender(place)}
                   </Text>
                   {this.props.iconResult}
+                  </View>
+                  </View>
                 </TouchableOpacity>
               );
             })}
@@ -232,6 +249,7 @@ PlacesInput.propTypes = {
   iconInput: PropTypes.any,
   language: PropTypes.string,
   onSelect: PropTypes.func,
+  backSelection: PropTypes.func,
   onChangeText: PropTypes.func,
   requiredCharactersBeforeSearch: PropTypes.number,
   requiredTimeBeforeSearch: PropTypes.number,
@@ -260,31 +278,40 @@ const styles = StyleSheet.create({
     left: 10,
     right: 10,
     zIndex: 1000,
-    shadowColor: '#000',
+    shadowColor: '#fff',
     shadowOffset: {
       width: 0,
       height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-
     elevation: 5,
   },
   input: {
     height: 50,
     backgroundColor: '#fff',
     paddingHorizontal: 15,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: '#D9D8D8',
   },
   scrollView: {
     backgroundColor: '#fff',
+    flex: 1,
+    marginTop: 30,
+    left: 0,
+    right: 0,
   },
   place: {
+    height: 80,
     flexDirection: 'row',
     borderBottomWidth: 1,
     borderColor: 'rgba(0,0,0,0.1)',
-    padding: 15,
+    padding: 8,
     position: 'relative',
     zIndex: 10001,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   placeIcon: {
     position: 'absolute',
@@ -295,9 +322,75 @@ const styles = StyleSheet.create({
   placeText: {
     color: 'rgba(0,0,0,0.8)',
     paddingRight: 60,
+    fontSize: 13,
+    // lineHeight: 17,
   },
   loading: {
     margin: 10,
+  },
+  item: {
+    // height: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  // itemBG: {
+  //   flexDirection: 'row',
+  // },
+  itemContent: {
+    marginLeft: 10,
+    marginRight: 20,
+   
+    height: 60,
+    flex: 1,
+  },
+  time: {
+    width: 30,
+    height: 30,
+  },
+  itemBG: {
+    marginVertical:10,
+    flexDirection: 'row',
+  },
+  subTitle: {
+    fontSize: 12,
+    lineHeight: 16,
+    marginTop: 5,
+    color: '#9B9B9B',
+  },
+  contentBG: {
+    flexDirection: 'row',
+    height: 60,
+    alignItems: 'center',
+  },
+  leftImage: {
+    width: 30,
+    height: 29,
+  },
+  leftView: {
+    width: 45,
+    height: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 10,
+  },
+  textInputBG: {
+    flex: 1,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: '#D9D8D8',
+    height: 50,
+    marginRight: 15,
+  },
+  textInput: {
+    height: '100%',
+    paddingLeft: 19,
+    color: '#4A4A4A',
+    fontSize: 13,
+    lineHeight: 16,
+  },
+  lineView: {
+    backgroundColor: '#C2CACF',
+    height: 0.5,
   },
 });
 

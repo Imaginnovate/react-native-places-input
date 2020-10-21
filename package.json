@@ -1,17 +1,41 @@
 {
-  "name": "react-native-places-input",
-  "version": "1.1.7",
-  "main": "index.js",
-  "author": "Kamil Thomas",
-  "license": "MIT",
-  "homepage": "https://github.com/jaing/",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jaing/react-native-places-input"
+  "_from": "react-native-places-input",
+  "_id": "react-native-places-input@1.1.7",
+  "_inBundle": false,
+  "_integrity": "sha512-Gxl6bNFGK8vCagTRjONKspdgpGs+pGSu/Y3Bp7XZqFaowekhDdQYfs6yXe+WZofH/EmNzFH40jKc83URvqYPXQ==",
+  "_location": "/react-native-places-input",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "react-native-places-input",
+    "name": "react-native-places-input",
+    "escapedName": "react-native-places-input",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/react-native-places-input/-/react-native-places-input-1.1.7.tgz",
+  "_shasum": "8e36fdd87e1f855d72029f7e2b670f7832a2872c",
+  "_spec": "react-native-places-input",
+  "_where": "/Users/developer/ReactNativeWorkSpace/Unytag-mobile-app",
+  "author": {
+    "name": "Kamil Thomas"
   },
   "bugs": {
     "url": "https://github.com/jaing/react-native-places-input/issues"
   },
+  "bundleDependencies": false,
+  "dependencies": {
+    "prop-types": "^15.7.2"
+  },
+  "deprecated": false,
+  "description": "Up to date working Google Places Input. Calling directly API not JS SDK.",
+  "homepage": "https://github.com/jaing/",
   "keywords": [
     "input",
     "react-native",
@@ -21,10 +45,15 @@
     "ios",
     "android"
   ],
-  "dependencies": {
-    "prop-types": "^15.7.2"
-  },
+  "license": "MIT",
+  "main": "index.js",
+  "name": "react-native-places-input",
   "peerDependencies": {
     "react-native": ">= 0.25"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaing/react-native-places-input.git"
+  },
+  "version": "1.1.7"
 }
