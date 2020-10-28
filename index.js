@@ -86,10 +86,12 @@ class PlacesInput extends Component {
                   <View style={styles.itemBG}>
                   <Image style={ styles.time } source={ require('./time.png') } />
                   <View style={styles.itemContent}>
-                  <Text style={[styles.placeText, this.props.stylesItemText]}>
+                  <Text style={[styles.placeText, this.props.stylesItemText]}
+                  numberOfLines={1}>
                     {place.terms[0].value}
                   </Text>
-                  <Text style={[styles.placeText, styles.subTitle, this.props.stylesItemText]}>
+                  <Text style={[styles.placeText, styles.subTitle, this.props.stylesItemText]}
+                  numberOfLines={3}>
                     {this.props.resultRender(place)}
                   </Text>
                   {this.props.iconResult}
