@@ -39,12 +39,15 @@ class PlacesInput extends Component {
 
 
   render() {
+    const {
+      showBackButton
+    } = this.props
     return (
       <View style={{flex:1}}>
         <View style={ styles.contentBG }>
-            <TouchableOpacity style={ styles.leftView } onPress={ this.props.backSelection }>
+           {showBackButton&& <TouchableOpacity style={ styles.leftView } onPress={ this.props.backSelection }>
               <Image style={ styles.leftImage } source={ require('./arrow_back.png') } />
-            </TouchableOpacity>
+            </TouchableOpacity>}
       <View style={[styles.textInputBG, this.props.stylesContainer]}>      
         <TextInput
           placeholder={this.props.placeHolder}
@@ -57,7 +60,6 @@ class PlacesInput extends Component {
           }}
           value={this.state.query}
           onFocus={() => this.setState({showList: true})}
-          onBlur={() => this.setState({showList: false})}
           {...this.props.textInputProps}
           clearButtonMode="always"
         />
@@ -255,6 +257,7 @@ PlacesInput.propTypes = {
   onChangeText: PropTypes.func,
   requiredCharactersBeforeSearch: PropTypes.number,
   requiredTimeBeforeSearch: PropTypes.number,
+  showBackButton: PropTypes.bool,
 };
 
 PlacesInput.defaultProps = {
