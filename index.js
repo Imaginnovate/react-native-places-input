@@ -8,7 +8,11 @@ import {
   TouchableOpacity,
   View,
   Image,
+  ScrollView,
+  Dimensions
 } from 'react-native';
+
+const heightValue = Dimensions.get('window').height - 100;
 
 class PlacesInput extends Component {
   state = {
@@ -36,6 +40,30 @@ class PlacesInput extends Component {
       this.fetchPlaces()
     }
   }
+
+
+  renderItem = ({ item }) => (
+    <TouchableOpacity
+    key={`place-${item.place_id || item.id}`}
+    style={[styles.item, this.props.stylesItem]}
+    onPress={() => this.onPlaceSelect(item.place_id, item)}
+  >
+    <View style={styles.itemBG}>
+    <Image style={ styles.time } source={ require('./time.png') } />
+    <View style={styles.itemContent}>
+    <Text style={[styles.placeText, this.props.stylesItemText]}
+    numberOfLines={1}>
+      {item.terms[0].value}
+    </Text>
+    <Text style={[styles.placeText, styles.subTitle, this.props.stylesItemText]}
+    numberOfLines={3}>
+      {this.props.resultRender(item)}
+    </Text>
+    {this.props.iconResult}
+    </View>
+    </View>
+  </TouchableOpacity>
+  )
 
 
   render() {
@@ -67,16 +95,19 @@ class PlacesInput extends Component {
         </View>
         {this.state.showList && (
           <View
-            style={[styles.scrollView, this.props.stylesList]}
-            keyboardShouldPersistTaps="always"
+           style={[styles.scrollView, this.props.stylesList]}
+           keyboardShouldPersistTaps="always" 
           >
             {this.props.contentScrollViewTop}
+           
             {this.state.isLoading && (
               <ActivityIndicator
                 size="small"
                 style={[styles.loading, this.props.stylesLoading]}
               />
-            )}
+            )}  
+            <View style={{height: heightValue}}>  
+            <ScrollView>         
             {this.state.places.map(place => {
               console.log(place);
               return (
@@ -102,6 +133,8 @@ class PlacesInput extends Component {
                 </TouchableOpacity>
               );
             })}
+            </ScrollView> 
+            </View>
             {this.props.contentScrollViewBottom}
           </View>
         )}
