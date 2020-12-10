@@ -12,7 +12,7 @@ import {
   Dimensions
 } from 'react-native';
 
-const heightValue = Dimensions.get('window').height - 100;
+const heightValue = Dimensions.get('window').height - 150;
 
 class PlacesInput extends Component {
   state = {
@@ -382,12 +382,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   time: {
-    width: 30,
-    height: 30,
+    width: 25,
+    height: 25,
   },
   itemBG: {
     marginVertical:10,
     flexDirection: 'row',
+    // alignItems: 'center',
   },
   subTitle: {
     fontSize: 12,

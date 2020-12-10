@@ -1,27 +1,30 @@
 {
-  "_from": "react-native-places-input",
-  "_id": "react-native-places-input@1.1.7",
+  "_args": [
+    [
+      "github:Imaginnovate/react-native-places-input#input-field-customization",
+      "/Users/developer/ReactNativeWorkSpace/Unytag-mobile-app"
+    ]
+  ],
+  "_from": "github:Imaginnovate/react-native-places-input#input-field-customization",
+  "_id": "react-native-places-input@github:Imaginnovate/react-native-places-input#24fac726eac46e3f9fccca374e7624010ed26a58",
   "_inBundle": false,
-  "_integrity": "sha512-Gxl6bNFGK8vCagTRjONKspdgpGs+pGSu/Y3Bp7XZqFaowekhDdQYfs6yXe+WZofH/EmNzFH40jKc83URvqYPXQ==",
+  "_integrity": "",
   "_location": "/react-native-places-input",
   "_phantomChildren": {},
   "_requested": {
-    "type": "tag",
-    "registry": true,
-    "raw": "react-native-places-input",
-    "name": "react-native-places-input",
-    "escapedName": "react-native-places-input",
-    "rawSpec": "",
-    "saveSpec": null,
-    "fetchSpec": "latest"
+    "type": "git",
+    "raw": "github:Imaginnovate/react-native-places-input#input-field-customization",
+    "rawSpec": "github:Imaginnovate/react-native-places-input#input-field-customization",
+    "saveSpec": "github:Imaginnovate/react-native-places-input#input-field-customization",
+    "fetchSpec": null,
+    "gitCommittish": "input-field-customization"
   },
   "_requiredBy": [
-    "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/react-native-places-input/-/react-native-places-input-1.1.7.tgz",
+  "_resolved": "github:Imaginnovate/react-native-places-input#24fac726eac46e3f9fccca374e7624010ed26a58",
   "_shasum": "8e36fdd87e1f855d72029f7e2b670f7832a2872c",
-  "_spec": "react-native-places-input",
+  "_spec": "github:Imaginnovate/react-native-places-input#input-field-customization",
   "_where": "/Users/developer/ReactNativeWorkSpace/Unytag-mobile-app",
   "author": {
     "name": "Kamil Thomas"
@@ -29,7 +32,6 @@
   "bugs": {
     "url": "https://github.com/jaing/react-native-places-input/issues"
   },
-  "bundleDependencies": false,
   "dependencies": {
     "prop-types": "^15.7.2"
   },
