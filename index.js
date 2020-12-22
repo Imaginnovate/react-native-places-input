@@ -11,6 +11,7 @@ import {
   ScrollView,
   Dimensions
 } from 'react-native';
+import fetch from './fetchWithTimeout'
 
 const heightValue = Dimensions.get('window').height - 150;
 
@@ -20,6 +21,8 @@ class PlacesInput extends Component {
     places: [],
     showList: false,
     isLoading: false,
+    numberOfLines: 1,
+    inputHeight: 50,
   };
 
   timeout = null;
@@ -70,16 +73,17 @@ class PlacesInput extends Component {
     const {
       showBackButton
     } = this.props
+    const {inputHeight} = this.state;
     return (
       <View style={{flex:1}}>
         <View style={ styles.contentBG }>
            {showBackButton&& <TouchableOpacity style={ styles.leftView } onPress={ this.props.backSelection }>
               <Image style={ styles.leftImage } source={ require('./arrow_back.png') } />
             </TouchableOpacity>}
-      <View style={[styles.textInputBG, this.props.stylesContainer]}>      
+      <View style={[styles.textInputBG, this.props.stylesContainer, {height: inputHeight}]}>      
         <TextInput
           placeholder={this.props.placeHolder}
-          style={[styles.input, styles.textInput, this.props.stylesInput]}
+          style={[styles.input, styles.textInput, this.props.stylesInput, {height: inputHeight,textAlignVertical: "top",paddingTop: 0, paddingBottom:0}]}
           onChangeText={query => {
             this.setState({query}, () => {
               this.onPlaceSearch();
@@ -87,9 +91,11 @@ class PlacesInput extends Component {
             });
           }}
           value={this.state.query}
-          onFocus={() => this.setState({showList: true})}
+          onFocus={() => this.setState({showList: true, inputHeight: 50})}
           {...this.props.textInputProps}
           clearButtonMode="always"
+          numberOfLines
+          multiline={!(inputHeight===50)}
         />
         </View>
         </View>
@@ -190,18 +196,24 @@ class PlacesInput extends Component {
   };
 
   fetchPlaces = async () => {
+
     if (
       !this.state.query ||
       this.state.query.length < this.props.requiredCharactersBeforeSearch
     ) {
       return;
     }
+    const {netWorkAvailable} = this.props;
+    console.log(netWorkAvailable);
+   
     this.setState(
       {
         showList: true,
         isLoading: true,
       },
       async () => {
+        if(netWorkAvailable)
+        {
         const places = await fetch(
           `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${
             this.state.query
@@ -209,32 +221,53 @@ class PlacesInput extends Component {
             this.props.language
           }&fields=${
             this.props.queryFields
-          }${this.buildLocationQuery()}${this.buildCountryQuery()}${this.buildTypesQuery()}${this.buildSessionQuery()}`
-        ).then(response => response.json());
-
+          }${this.buildLocationQuery()}${this.buildCountryQuery()}${this.buildTypesQuery()}${this.buildSessionQuery()}`,{},7000
+        ).then(response => response.json()).catch((e) => {
+          this.setState({
+            isLoading: false,
+            places: [],
+          }); 
+      });
         this.setState({
           isLoading: false,
           places: places.predictions,
         });
+      }else {
+        this.setState({
+          isLoading: false,
+          places: [],
+        });
+      }
       }
     );
   };
 
   onPlaceSelect = async (id, passedPlace) => {
-    const {clearQueryOnSelect} = this.props;
-
+    const {clearQueryOnSelect, netWorkAvailable} = this.props;
+    console.log(netWorkAvailable);
+    if(netWorkAvailable)
+    {
     this.setState({
       isLoading: true,
     }, async () => {
       try {
         const place = await fetch(
-          `https://maps.googleapis.com/maps/api/place/details/json?placeid=${id}&key=${this.props.googleApiKey}&fields=${this.props.queryFields}&language=${this.props.language}${this.buildSessionQuery()}`
-        ).then(response => response.json());
+          `https://maps.googleapis.com/maps/api/place/details/json?placeid=${id}&key=${this.props.googleApiKey}&fields=${this.props.queryFields}&language=${this.props.language}${this.buildSessionQuery()}`,{},7000
+        ).then(response => response.json()).catch((e) => {
+          this.setState({
+            isLoading: false,
+            inputHeight: 50,
+            places: [],
+            numberOfLines: 3,
+          }); 
+      });
 
         return this.setState(
           {
             showList: false,
             isLoading: false,
+            inputHeight: 50,
+            numberOfLines: 3,
             query: clearQueryOnSelect ? '' :
               place &&
               place.result &&
@@ -257,6 +290,7 @@ class PlacesInput extends Component {
         );
       }
     });
+  }
   };
 }
 
@@ -291,6 +325,7 @@ PlacesInput.propTypes = {
   requiredCharactersBeforeSearch: PropTypes.number,
   requiredTimeBeforeSearch: PropTypes.number,
   showBackButton: PropTypes.bool,
+  netWorkAvailable: PropTypes.bool,
 };
 
 PlacesInput.defaultProps = {
@@ -326,12 +361,13 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   input: {
-    height: 50,
+    // height: 50,
     backgroundColor: '#fff',
-    paddingHorizontal: 15,
+    paddingHorizontal: 5,
     borderRadius: 4,
     borderWidth: 1,
     borderColor: '#D9D8D8',
+    paddingTop: 15,
   },
   scrollView: {
     backgroundColor: '#fff',
@@ -417,7 +453,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     borderWidth: 1,
     borderColor: '#D9D8D8',
-    height: 50,
+    // height: 50,
     marginRight: 15,
   },
   textInput: {
